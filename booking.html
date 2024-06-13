@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <title>Train Reservation System</title>
+    <style>
+        body {
+            font-family: Calibri, Arial, Bahnschrift;
+            background-color: #f0f0f0;
+        }
+
+        .navbar-custom {
+            background-color: #062A78;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-custom img {
+            width: 90px;
+            height: 70px;
+            margin-right: 20px;
+        }
+
+        .navbar-custom p {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .navbar-custom a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .navbar-custom .right-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-custom .right-section p,
+        .navbar-custom .right-section a {
+            margin: 0 5px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .nav-pills .nav-link {
+            margin: 2px 10px;
+            background-color: lightblue;
+            color: black;
+            font-weight: bold;
+            padding: 15px;
+            border: 0.5px solid black;
+        }
+
+        .nav-pills .nav-link:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .container-custom {
+            width: 60%;
+            padding: 25px;
+            background-color: white;
+            margin: 30px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        input[type=text],
+        input[type=password],
+        input[type=number],
+        input[type=date] {
+            width: calc(50% - 20px);
+            padding: 12px;
+            margin: 8px 10px;
+            display: inline-block;
+            border: 1.5px solid orange;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: lightgreen;
+            color: red;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        button[type="submit"]:hover {
+            opacity: 0.7;
+        }
+
+        .cancelbtn {
+            background-color: red;
+            color: white;
+        }
+
+        .table-container {
+            width: 100%;
+            margin: 0 auto;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .table-container th,
+        .table-container td {
+            text-align: center;
+            border: 2px solid black;
+            padding: 10px;
+            align-items: center;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 20px auto;
+        }
+
+        .form-buttons button {
+            width: 23%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar-custom">
+        <img src="irctc.png" alt="IRCTC Logo">
+        <p>Indian Railway Catering and Tourism Corporation</p>
+        <div class="right-section">
+            <p id="datetime"></p>
+            <p>|</p>
+            <a href="https://en.wikipedia.org/wiki/Indian_Railway_Catering_and_Tourism_Corporation">ABOUT US</a>
+            <p>|</p>
+            <a href="#">CONTACT US</a>
+        </div>
+        </div>
+    </div>
+    <ul class="nav nav-pills nav-fill">
+            <a class="nav-link" href="home.html">Book Tickets</a>
+            <a class="nav-link" href="login.html">Login</a>
+            <a class="nav-link" href="registration.html">Registration</a>
+            <a class="nav-link" href="cancel.html">Cancel Tickets</a>
+            <a class="nav-link active" href="booking.html">Booking History</a>
+    </ul>
+
+    <div class="container-custom">
+        <h1 class="text-center"><b>Train Reservation Booking History</b></h1>
+        <form>
+            <h3>Booked Ticket History</h3>
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="pnr">PNR Number:</label>
+                    <input type="number" id="pnr" name="pnr" class="form-control">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="transaction_id">Transaction ID:</label>
+                    <input type="text" id="transaction_id" name="transaction_id" class="form-control">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="from_station">From Station:</label>
+                    <input type="text" id="from_station" name="from_station" class="form-control">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="to_station">To Station:</label>
+                    <input type="text" id="to_station" name="to_station" class="form-control">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="journey_date">Journey Date:</label>
+                    <input type="date" id="journey_date" name="journey_date" class="form-control">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">SEARCH</button>
+            <hr>
+            <h3>Booked Tickets</h3>
+            <div class="table-container">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>S. No.</th>
+                            <th>Select</th>
+                            <th>Transaction ID</th>
+                            <th>PNR Number</th>
+                            <th>Journey Date</th>
+                            <th>Train Number</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Reservation Status</th>
+                            <th>Booking Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><input type="checkbox"></td>
+                            <td>1003243456675451</td>
+                            <td>4322343432</td>
+                            <td>23-04-2022</td>
+                            <td>12235</td>
+                            <td>Mgr Chennai Central (MAS)</td>
+                            <td>New Delhi (NDLS)</td>
+                            <td>Booked</td>
+                            <td>17-04-2022</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><input type="checkbox"></td>
+                            <td>1004565432351</td>
+                            <td>4567890034</td>
+                            <td>12-05-2022</td>
+                            <td>12624</td>
+                            <td>Thrissur (TCR)</td>
+                            <td>Mgr Chennai Central (MAS)</td>
+                            <td>Cancelled</td>
+                            <td>18-04-2022</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><input type="checkbox"></td>
+                            <td>1004565123456</td>
+                            <td>4567891234</td>
+                            <td>29-06-2022</td>
+                            <td>65342</td>
+                            <td>Secunderabad (SC)</td>
+                            <td>Hazrat Nizamuddin (NZM)</td>
+                            <td>Booked</td>
+                            <td>22-03-2022</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-danger">CANCEL TICKET</button>
+                <button type="submit" class="btn btn-info">Get PNR Status</button>
+                <button type="submit" class="btn btn-warning">Print E-Ticket</button>
+                <button type="submit" class="btn btn-success">Get SMS</button>
+            </div>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
